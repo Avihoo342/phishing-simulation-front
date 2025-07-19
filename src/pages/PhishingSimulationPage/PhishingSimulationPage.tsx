@@ -3,8 +3,8 @@ import simulationAPI from '../../api/axiosSimulation';
 import './PhishingSimulationPage.module.css';
 
 interface Attempt {
-  recipientEmail: string;
-  emailContent: string;
+  email: string;
+  content: string;
   status: string;
 }
 
@@ -23,8 +23,8 @@ export default function PhishingSimulationPage() {
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    await simulationAPI.post('/phishing/send', { email });
-    setEmail('');
+    console.log(email)
+    await simulationAPI.post('/phishing/send', { to: email });
     fetchAttempts();
   };
 
@@ -53,8 +53,8 @@ export default function PhishingSimulationPage() {
         <tbody>
           {attempts.map((a, idx) => (
             <tr key={idx}>
-              <td>{a.recipientEmail}</td>
-              <td>{a.emailContent}</td>
+              <td>{a.email}</td>
+              <td>{a.content}</td>
               <td>{a.status}</td>
             </tr>
           ))}
