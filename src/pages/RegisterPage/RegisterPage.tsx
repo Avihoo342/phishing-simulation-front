@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axiosManagement from '../../api/axiosManagement';
 import { useNavigate } from 'react-router-dom';
-import './RegisterPage.module.css';
+import './RegisterPage.css';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');

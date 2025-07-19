@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import simulationAPI from '../../api/axiosSimulation';
-import './PhishingSimulationPage.module.css';
+import './PhishingSimulationPage.css';
 
 interface Attempt {
   email: string;
