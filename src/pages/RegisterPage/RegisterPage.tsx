@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axiosManagement from '../../api/axiosManagement';
 import { useNavigate } from 'react-router-dom';
+import './RegisterPage.css';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -14,11 +15,25 @@ export default function RegisterPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="register-form">
       <h2>Register</h2>
-      <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-      <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      <button type="submit">Register</button>
+      <input
+        className="input-field"
+        placeholder="Email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        type="email"
+        required
+      />
+      <input
+        className="input-field"
+        placeholder="Password"
+        type="password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+      />
+      <button type="submit" className="submit-button">Register</button>
     </form>
   );
 }

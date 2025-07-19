@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import simulationAPI from '../../api/axiosSimulation';
+import './PhishingSimulationPage.css';
 
 interface Attempt {
   recipientEmail: string;
@@ -28,19 +29,20 @@ export default function PhishingSimulationPage() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSend}>
+    <div className="phishing-container">
+      <form onSubmit={handleSend} className="phishing-form">
         <h2>Send Phishing Simulation</h2>
         <input
           placeholder="Target Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          className="phishing-input"
         />
-        <button type="submit">Send</button>
+        <button type="submit" className="phishing-button">Send</button>
       </form>
 
       <h3>Phishing Attempts</h3>
-      <table>
+      <table className="phishing-table">
         <thead>
           <tr>
             <th>Email</th>
