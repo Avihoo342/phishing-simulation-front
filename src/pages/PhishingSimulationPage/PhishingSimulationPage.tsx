@@ -23,7 +23,6 @@ export default function PhishingSimulationPage() {
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(email)
     await simulationAPI.post('/phishing/send', { to: email });
     fetchAttempts();
   };
