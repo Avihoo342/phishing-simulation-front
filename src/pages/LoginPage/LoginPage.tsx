@@ -1,19 +1,22 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import managementAPI from '../../api/axiosManagement';
-import './LoginPage.css'; 
+import { useLogin } from '../../hooks/useLogin';
+import './LoginPage.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useLogin();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await managementAPI.post('/auth/login', { email, password });
-    localStorage.setItem('token', res.data.access_token);
-    navigate('/simulation');
-  };
+    try {
+      await login(email, password);
+    } catch {
+      alert('Invalid email or password');
+    }
+  }, [email, password, login]);
 
   return (
     <form onSubmit={handleLogin} className="form">
@@ -34,14 +37,13 @@ export default function LoginPage() {
       <button type="submit" className="button">
         Login
       </button>
-
-        <button
+      <button
         type="button"
         onClick={() => navigate('/register')}
         className="register-button"
-        >
+      >
         Go to Register
-        </button>
+      </button>
     </form>
   );
 }
