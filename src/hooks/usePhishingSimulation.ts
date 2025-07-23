@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import simulationAPI from '../api/axiosSimulation';
+import managementAPI from '../api/axiosManagement';
 
 export interface Attempt {
   email: string;
-  content: string;
   status: string;
 }
 
@@ -12,7 +11,7 @@ export function usePhishingSimulation() {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
 
   const fetchAttempts = useCallback(async () => {
-    const { data } = await simulationAPI.get('/phishing/attempts');
+    const { data } = await managementAPI.get('/attempts');
     setAttempts(data);
   }, []);
 
@@ -21,7 +20,7 @@ export function usePhishingSimulation() {
       alert('Please enter a target email');
       return;
     }
-    await simulationAPI.post('/phishing/send', { to: email });
+    await managementAPI.post('/attempts', { email: email });
     await fetchAttempts();
   }, [email, fetchAttempts]);
 

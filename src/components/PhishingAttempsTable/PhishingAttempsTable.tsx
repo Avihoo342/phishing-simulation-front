@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 
 interface Attempt {
   email: string;
-  content: string;
   status: string;
 }
 
@@ -15,7 +14,6 @@ export default function PhishingAttemptsTable({ attempts }: Props) {
     return attempts.map((a, idx) => (
       <tr key={idx}>
         <td>{a.email}</td>
-        <td>{a.content}</td>
         <td>{a.status}</td>
       </tr>
     ));
@@ -28,7 +26,6 @@ export default function PhishingAttemptsTable({ attempts }: Props) {
         <thead>
           <tr>
             <th>Email</th>
-            <th>Content</th>
             <th>Status</th>
           </tr>
         </thead>
