@@ -5,7 +5,7 @@ import './PhishingSimulationPage.css';
 import PhishingAttemptsTable from '../../components/PhishingAttempsTable/PhishingAttempsTable';
 
 export default function PhishingSimulationPage() {
-  const { email, setEmail, attempts, sendPhishingEmail } = usePhishingSimulation();
+  const { email, setEmail, attempts, sendPhishingEmail, loading, error } = usePhishingSimulation();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -18,7 +18,7 @@ export default function PhishingSimulationPage() {
   return (
     <div className="phishing-container">
       <PhishingForm email={email} onEmailChange={e => setEmail(e.target.value)} onSubmit={handleSubmit} />
-      <PhishingAttemptsTable attempts={attempts} />
+      <PhishingAttemptsTable attempts={attempts} loading={loading} error={error} />
     </div>
   );
 }

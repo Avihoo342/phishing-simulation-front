@@ -7,9 +7,11 @@ interface Attempt {
 
 interface Props {
   attempts: Attempt[];
+  loading: boolean;
+  error : string | null;
 }
 
-export default function PhishingAttemptsTable({ attempts }: Props) {
+export default function PhishingAttemptsTable({ attempts, loading, error }: Props) {
   const attemptRows = useMemo(() => {
     return attempts.map((a, idx) => (
       <tr key={idx}>
@@ -19,7 +21,10 @@ export default function PhishingAttemptsTable({ attempts }: Props) {
     ));
   }, [attempts]);
 
-  return (
+  if (error) {
+    return <div>Error with fetching data: {error}</div>;
+  }
+  return !loading ? (
     <>
       <h3>Phishing Attempts</h3>
       <table className="phishing-table">
@@ -32,5 +37,5 @@ export default function PhishingAttemptsTable({ attempts }: Props) {
         <tbody>{attemptRows}</tbody>
       </table>
     </>
-  );
+  ) : <div>Loading data...</div>;
 }
