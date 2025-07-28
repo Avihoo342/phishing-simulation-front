@@ -1,6 +1,13 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import managementAPI from '../api/axiosManagement';
+
+type ErrorResponse = {
+  statusCode: number;
+  message: string[] | string;
+  error: string;
+};
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -8,15 +15,17 @@ export function useLogin() {
   const login = useCallback(async (email: string, password: string) => {
     try {
       const res = await managementAPI.post('/auth/login', { email, password });
-      if(res.data.access_token) {
+      if (res.data.access_token) {
         localStorage.setItem('token', res.data.access_token);
         navigate('/simulation');
       } else {
-        alert('Login failed - user not found or invalid credentials');
+        throw new Error('Login failed - no token returned');
       }
     } catch (err) {
-      console.error('Login failed:', err);
-      throw err;
+      const axiosError = err as AxiosError;
+      const data = axiosError.response?.data as ErrorResponse;
+      const message = data?.message ?? 'Unknown error occurred';
+      throw Array.isArray(message) ? message.join(', ') : message;
     }
   }, [navigate]);
 

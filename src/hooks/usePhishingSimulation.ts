@@ -67,7 +67,7 @@ export function usePhishingSimulation() {
       await managementAPI.post('/attempts', { email: state.email });
       await fetchAttempts();
     } catch (err: any) {
-      dispatch({ type: 'FETCH_ERROR', payload: err?.message || 'Failed to fetch attempts' });
+      dispatch({ type: 'FETCH_ERROR', payload: 'Failed to send phishing mail' });
     }
   }, [state.email, fetchAttempts]);
 
